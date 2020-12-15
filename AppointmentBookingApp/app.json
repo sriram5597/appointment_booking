@@ -1,0 +1,15 @@
+{
+  "name": "AppointmentBookingApp",
+  "displayName": "AppointmentBookingApp",
+  "expo": {
+    "name": "AppointmentBookingApp",
+    "slug": "AppointmentBookingApp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.app.AppointmentBookingApp"
+    }
+  }
+}
