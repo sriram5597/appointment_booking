@@ -19,6 +19,7 @@ const LocationRouter = require('./routers/LocationRoute');
 const ShopRouter = require('./routers/ShopRouter');
 const ServiceRouter = require('./routers/ServiceRouter');
 const StaffRouter = require('./routers/StaffRouter');
+const OfferRouter = require("./routers/OfferRouter");
 
 const app = express();
 app.use(express.json());
@@ -29,6 +30,7 @@ app.use("/location", LocationRouter);
 app.use('/shop', ShopRouter);
 app.use("/service", ServiceRouter);
 app.use("/staff", StaffRouter);
+app.use("/offer", OfferRouter);
 
 app.use(Cors());
 
