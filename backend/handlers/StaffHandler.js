@@ -77,3 +77,21 @@ exports.updateStaff = async (req, res) => {
         return res.status(500).send({ message: "something went wrong" });
     }
 }
+
+exports.markPresence = async (req, res) => {
+    try{
+        if(req.user.role !== 'SHOP_OWNER'){
+            return res.status(403).send({ message: "Access Denied" });
+        }
+
+        const staff = await StaffModel.findById(req.params.id);
+        staff.available = !staff.available;
+        await staff.save();
+
+        return res.status(200).send({ staff });
+    }
+    catch(err){
+        console.log(err.message);
+        return res.status(500).message({ message: "something went wrong" });
+    }
+}
