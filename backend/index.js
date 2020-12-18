@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const Mongoose = require('mongoose');
 const Cors = require('cors');
 
@@ -20,6 +19,7 @@ const ShopRouter = require('./routers/ShopRouter');
 const ServiceRouter = require('./routers/ServiceRouter');
 const StaffRouter = require('./routers/StaffRouter');
 const OfferRouter = require("./routers/OfferRouter");
+const BookingRouter = require("./routers/BookingRoute");
 
 const app = express();
 app.use(express.json());
@@ -31,6 +31,7 @@ app.use('/shop', ShopRouter);
 app.use("/service", ServiceRouter);
 app.use("/staff", StaffRouter);
 app.use("/offer", OfferRouter);
+app.use("/booking", BookingRouter);
 
 app.use(Cors());
 
