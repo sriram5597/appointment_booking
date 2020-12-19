@@ -5,16 +5,16 @@ const OfferSchema = Schema({
     promoCode: {
         type: String,
         unique: true,
-        required: true
+        required: true,
     },
     shopId: {
         type: Schema.Types.ObjectId,
-        ref: "shops"
+        ref: 'shops',
     },
     expireDate: Date,
     services: {
-        type: Schema.Types.Array
-    }
+        type: Schema.Types.Array,
+    },
 });
 
-module.exports = model("offers", OfferSchema);
+module.exports = model('offers', OfferSchema);

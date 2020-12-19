@@ -1,9 +1,8 @@
 const { model, Schema } = require('mongoose');
 
-//schema
+// schema
 const Service = require('./ServiceSchema');
 const Branch = require('./BranchSchema');
-const { number } = require('joi');
 
 const shopSchema = Schema({
     name: {
@@ -13,17 +12,17 @@ const shopSchema = Schema({
     },
     address: {
         type: String,
-        required: true
+        required: true,
     },
     city: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'locations'
+        ref: 'locations',
     },
     shopOwnerId: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'users'
+        ref: 'users',
     },
     ratings: {
         type: Schema.Types.Number,
@@ -31,11 +30,11 @@ const shopSchema = Schema({
     },
     openTime: {
         type: String,
-        required: true
+        required: true,
     },
     closeTime: {
         type: String,
-        required: true
+        required: true,
     },
     imageUrl: {
         type: String,
@@ -44,4 +43,4 @@ const shopSchema = Schema({
     branches: [Branch],
 });
 
-module.exports = model("shops", shopSchema);
+module.exports = model('shops', shopSchema);

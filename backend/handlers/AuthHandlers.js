@@ -1,83 +1,81 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-underscore-dangle */
 const uuid = require('uuid');
-const NodeMailer = require('nodemailer');
 
 const { getUrl, getCredentials } = require('../oauth/googleConfig');
-const { generateToken } = require("../utils/JwtProvider");
-const { hashPassword, verifyHash } = require("../utils/PasswordHash");
+const { generateToken } = require('../utils/JwtProvider');
+const { hashPassword, verifyHash } = require('../utils/PasswordHash');
 const { registrationConfirmation, verificationMail } = require('./MailHandler');
 
-//models
+// models
 const UserModel = require('../models/UserModel');
 const TokenModel = require('../models/TokenModel');
 
-//validators
+// validators
 const { LoginValidator } = require('../validators/AuthValidators');
 
 const saveUser = async (cred) => {
-    try{
+    try {
         let user = await UserModel.find({ email: cred.details.email });
-        
-        if(user.length === 0){
+
+        if (user.length === 0) {
             user = UserModel();
             user.firstName = cred.details.given_name;
             user.lastName = cred.details.family_name;
             user.email = cred.details.email;
             user.verified = cred.details.verified_email;
-            user.role = "USER";
+            user.role = 'USER';
             user.passwordReset = true;
 
-            await user.save();     
+            await user.save();
         }
-    }
-    catch(err){
+    } catch (err) {
         console.log(err);
     }
-}
-
+};
 
 exports.authGreet = (req, res) => {
     const msg = {
-        message: "Hello World"
+        message: 'Hello World',
     };
-    
+
     return res.status(200).json(msg);
-}
+};
 
 exports.signUpWithGoogle = (req, res) => {
     const url = getUrl();
     res.redirect(url);
-}
+};
 
 exports.signInWithGoogle = (req, res) => {
     const url = getUrl();
     res.redirect(url);
-}
+};
 
 exports.googleHandler = async (req, res) => {
-    const code = req.query.code;
-    try{
-        if(code){
+    const { code } = req.query;
+    try {
+        if (code) {
             const cred = await getCredentials(code);
 
             saveUser(cred);
 
-            const token = generateToken(cred.details, "USER");
+            const token = generateToken(cred.details, 'USER');
 
-            return res.status(200).send({access_token: token});
+            return res.status(200).send({ access_token: token });
         }
-    }
-    catch(err){
+    } catch (err) {
         console.log(err.message);
-        return res.status(500).send({message: "something went wrong"});
+        return res.status(500).send({ message: 'something went wrong' });
     }
-}
+};
 
 exports.signUp = async (req, res) => {
-    try{
+    try {
         const userData = req.body;
         const user = new UserModel();
 
-        Object.keys(userData).forEach( (key) => {
+        Object.keys(userData).forEach((key) => {
             user[key] = userData[key];
         });
 
@@ -89,74 +87,68 @@ exports.signUp = async (req, res) => {
         activateToken.token = uuid.v4();
 
         await activateToken.save();
-        
+
         const token = generateToken(user, req.body.role);
 
-        console.log("sending mail");
-        const info = await registrationConfirmation(user, activateToken);
-
-        console.log(NodeMailer.getTestMessageUrl(info));
+        await registrationConfirmation(user, activateToken);
 
         return res.status(201).send({ access_token: token });
-    }
-    catch(err){
+    } catch (err) {
         console.log(err.message);
-        return res.status(500).send({ message: "something went wrong" });
+        return res.status(500).send({ message: 'something went wrong' });
     }
-}
+};
 
 exports.login = async (req, res) => {
-    try{
+    try {
         const { error } = LoginValidator.validate(req.body);
 
-        if(error){
+        if (error) {
             return res.status(400).send({ message: error.message });
         }
 
         const user = await UserModel.find({ email: req.body.email });
 
-        if(user.length === 0){
-            return res.status(400).send({ message: `${req.body.email} is not registered`});
+        if (user.length === 0) {
+            return res.status(400).send({ message: `${req.body.email} is not registered` });
         }
 
         const isVerified = await verifyHash(req.body.password, user[0].password);
-        if(!isVerified){
-            return res.status(403).send({ message: "Invalid Password" });
+        if (!isVerified) {
+            return res.status(403).send({ message: 'Invalid Password' });
         }
 
         const token = generateToken(user[0]);
 
-        return res.status(200).send({ token, });
-    }
-    catch(err){
+        return res.status(200).send({ token });
+    } catch (err) {
         console.log(err.message);
-        return res.status(500).send({ message: "something went wrong" });
+        return res.status(500).send({ message: 'something went wrong' });
     }
-}
+};
 
 exports.activateUser = async (req, res) => {
-    try{
+    try {
         const { userId, accessId } = req.query;
         const user = await UserModel.findOne({ _id: userId });
 
-        const token = await TokenModel.findOne({ userId: userId });
-    
-        if(token.token === accessId && token.createdAt + token.expiresIn * 1000 > Date.now()){
+        const token = await TokenModel.findOne({ userId });
+
+        if (token.token === accessId && token.createdAt + token.expiresIn * 1000 > Date.now()) {
             user.verified = true;
             await user.save();
             await TokenModel.deleteOne({ _id: token._id });
 
             await verificationMail(user);
 
-            return res.status(200).send({ message: "Verification Successfull"});
+            return res.status(200).send({ message: 'Verification Successfull' });
         }
-        
+
         await TokenModel.deleteOne({ _id: token._id });
 
-        return res.status(400).send({ message: "Verification Failed" });
-    }
-    catch(err){
+        return res.status(400).send({ message: 'Verification Failed' });
+    } catch (err) {
         console.log(err.message);
-        return res.status(500).send({ message: "Something went wrong" });
+        return res.status(500).send({ message: 'Something went wrong' });
     }
-}
+};

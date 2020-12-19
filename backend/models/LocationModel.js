@@ -5,7 +5,7 @@ const LocationSchema = Schema({
         type: String,
         required: true,
         unique: true,
-    }
+    },
 });
 
 module.exports = model('locations', LocationSchema);

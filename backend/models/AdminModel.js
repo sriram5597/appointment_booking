@@ -3,16 +3,16 @@ const Mongoose = require('mongoose');
 const AdminSchema = Mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
 });
 
-module.exports = Mongoose.model("admin", AdminSchema);
+module.exports = Mongoose.model('admin', AdminSchema);

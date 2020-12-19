@@ -11,14 +11,14 @@ const userSchema = new Schema({
     password: String,
     passwordReset: {
         type: Boolean,
-        default: false
+        default: false,
     },
     address: String,
     city: String,
     role: {
         type: String,
-        default: "USER"
-    }
+        default: 'USER',
+    },
 });
 
 module.exports = model('users', userSchema);

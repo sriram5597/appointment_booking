@@ -1,33 +1,32 @@
-const { boolean } = require('joi');
 const { Schema, model } = require('mongoose');
 
 const StaffSchema = Schema({
     name: {
-        type: String
+        type: String,
     },
     shopId: {
         type: Schema.Types.ObjectId,
-        ref: "shops"
+        ref: 'shops',
     },
     email: {
         type: String,
-        required: true
+        required: true,
     },
     mobile: {
-        type: String
+        type: String,
     },
     address: {
-        type:String,
-        required: true
+        type: String,
+        required: true,
     },
     city: {
         type: String,
-        required: true
+        required: true,
     },
     available: {
         type: Boolean,
-        default: false
-    }
+        default: false,
+    },
 });
 
-module.exports = model("staffs", StaffSchema);
+module.exports = model('staffs', StaffSchema);

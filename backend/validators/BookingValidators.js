@@ -5,5 +5,5 @@ exports.bookAppointmentValidator = Joi.object({
     bookingDate: Joi.date(),
     bookingTime: Joi.string(),
     staffPreference: Joi.string(),
-    services: Joi.array()
+    services: Joi.array(),
 });

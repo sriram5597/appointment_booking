@@ -5,5 +5,5 @@ exports.addStaffValidator = Joi.object({
     email: Joi.string().email(),
     mobile: Joi.string().length(10),
     address: Joi.string().min(5),
-    city: Joi.string().min(3)
+    city: Joi.string().min(3),
 });

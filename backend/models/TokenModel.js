@@ -4,20 +4,20 @@ const TokenSchema = Mongoose.Schema({
     userId: {
         type: Mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'users'
+        ref: 'users',
     },
     token: {
         type: String,
-        required: true
+        required: true,
     },
     createdAt: {
         type: Number,
-        default: Date.now()
+        default: Date.now(),
     },
-    expiresIn : {
+    expiresIn: {
         type: Number,
-        default: 43200
-    }
+        default: 43200,
+    },
 });
 
 module.exports = Mongoose.model('tokens', TokenSchema);

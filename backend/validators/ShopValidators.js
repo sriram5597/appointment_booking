@@ -5,5 +5,5 @@ exports.addShopValidator = Joi.object({
     address: Joi.string(),
     city: Joi.string(),
     openTime: Joi.string(),
-    closeTime: Joi.string()
+    closeTime: Joi.string(),
 });
