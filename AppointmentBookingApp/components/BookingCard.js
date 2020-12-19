@@ -8,7 +8,7 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //native-base
-import { Card, CardItem, Button } from 'native-base';
+import { Card, CardItem } from 'native-base';
 import theme from '../theme';
 
 const BookingCard = (props) => {
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        // height: '25%', 
         margin: '5%',
     },
 

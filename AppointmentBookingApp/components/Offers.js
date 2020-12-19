@@ -7,8 +7,6 @@ import { getOffers } from '../redux/actions/offerActions';
 //native
 import { ScrollView, Text, StyleSheet, View } from 'react-native';
 
-import theme from '../theme';
-
 //components
 import ShopCard from './ShopCard';
 
@@ -38,7 +36,7 @@ const Offers = (props) => {
             </ScrollView>
             </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({

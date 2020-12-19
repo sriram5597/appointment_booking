@@ -8,8 +8,6 @@ import { StyleSheet, Image, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getPromotions } from '../redux/actions/promotionActions';
 
-import theme from '../theme';
-
 const Promotion = (props) => {
     const { promotions } = props.promotion;
 
