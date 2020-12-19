@@ -2,58 +2,60 @@ import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-//icons
+// icons
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-//screen
+// screen
 import Home from './Home';
 import Explore from './Explore';
 import BookingList from './BookingList';
 
 import theme from '../theme';
 
-const Main = (props) => {
-    const Tab = createBottomTabNavigator();
+const Main = () => {
+  const Tab = createBottomTabNavigator();
 
-    const screenOptions = ({ route }) => ({
-        tabBarIcon: ({focused, color, size}) => {
-            let iconName;
+  const screenOptions = ({ route }) => ({
+    tabBarIcon: ({ color }) => {
+      let iconName;
 
-            switch (route.name) {
-                case 'Home':
-                    iconName = 'home';
-                    break;
-            
-                case 'Explore':
-                    iconName = 'explore'
-                    break;
+      switch (route.name) {
+        case 'Home':
+          iconName = 'home';
+          break;
 
-                case 'Appointments':
-                    iconName = 'date-range';
-                    break;
+        case 'Explore':
+          iconName = 'explore';
+          break;
 
-                default:
-                    break;
-            }
+        case 'Appointments':
+          iconName = 'date-range';
+          break;
 
-            return <Icon name={iconName} size={25} color={color} />
-        }
-    });
+        default:
+          break;
+      }
 
-    const tabOptions = {
-        activeTintColor: theme.palette.primary.main,
-        inactiveTintColor: 'darkgray'
-    }
+      return <Icon name={iconName} size={25} color={color} />;
+    },
+  });
 
-    return (
-        <Tab.Navigator initialRouteName="Home" 
-            screenOptions={screenOptions} tabBarOptions={tabOptions}
-        >
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Appointments" component={BookingList} />
-            <Tab.Screen name="Explore" component={Explore} />
-        </Tab.Navigator>
-    )
-}
+  const tabOptions = {
+    activeTintColor: theme.palette.primary.main,
+    inactiveTintColor: 'darkgray',
+  };
+
+  return (
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={screenOptions}
+        tabBarOptions={tabOptions}
+      >
+          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Appointments" component={BookingList} />
+          <Tab.Screen name="Explore" component={Explore} />
+      </Tab.Navigator>
+  );
+};
 
 export default Main;

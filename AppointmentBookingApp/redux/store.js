@@ -1,7 +1,9 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import {
+    createStore, combineReducers, applyMiddleware, compose,
+} from 'redux';
 import thunk from 'redux-thunk';
 
-//reducers
+// reducers
 import promotionReducer from './reducers/promotionReducer';
 import offersReducer from './reducers/offerReducers';
 import shopReducer from './reducers/shopReducer';
@@ -19,7 +21,7 @@ const reducers = combineReducers({
 });
 
 const store = createStore(reducers, initialState, compose(
-    applyMiddleware(...middleware)
+    applyMiddleware(...middleware),
 ));
 
 export default store;

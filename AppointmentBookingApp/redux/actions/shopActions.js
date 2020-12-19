@@ -5,14 +5,13 @@ import shops from '../../mockData/shops';
 export const getAllShops = () => (dispatch) => {
     dispatch({
         type: GET_SHOPS,
-        payload: shops
+        payload: shops,
     });
-}
+};
 
 export const getShop = (index) => (dispatch) => {
-    console.log(index);
     dispatch({
         type: GET_SHOP,
-        payload: shops[index]
+        payload: shops[index],
     });
-}
+};

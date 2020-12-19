@@ -1,60 +1,66 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-//redux
+// redux
 import { connect } from 'react-redux';
 
-//react-native
-import { StyleSheet, Text, View, } from 'react-native';
+// react-native
+import { StyleSheet, Text, View } from 'react-native';
 
-//maps
+// maps
 import MapView from 'react-native-maps';
 import theme from '../theme';
 
 const Location = (props) => {
-    const { shop } = props.shop;
+  const { shop } = props.shop;
 
-    return (
-        <View style={styles.root}>
-            <View style={styles.address}>
-                <Text style={styles.header}>
-                    Address
-                </Text>
-                <Text>
-                    {shop.address}
-                </Text>
-            </View>
-            <View>
-                <MapView style={styles.map} 
-                    zoomEnabled={true}
-                />
-            </View>
-        </View>
-    )
-}
+  return (
+      <View style={styles.root}>
+          <View style={styles.address}>
+              <Text style={styles.header}>
+                  Address
+              </Text>
+              <Text>
+                  {shop.address}
+              </Text>
+          </View>
+          <View>
+              <MapView
+                style={styles.map}
+                zoomEnabled
+              />
+          </View>
+      </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    root: {
-        height: '92%'
-    },
-    map: {
-        width: '95%',
-        height: '90%',
-        alignSelf: 'center',
-        padding: 10,
-    },
-    address: {
-        margin: 2,
-        padding: 10,
-    },
-    header: {
-        fontSize: 20,
-        color: theme.palette.primary.main,
-        fontWeight: 'bold'
-    }
+  root: {
+    height: '92%',
+  },
+  map: {
+    width: '95%',
+    height: '90%',
+    alignSelf: 'center',
+    padding: 10,
+  },
+  address: {
+    margin: 2,
+    padding: 10,
+  },
+  header: {
+    fontSize: 20,
+    color: theme.palette.primary.main,
+    fontWeight: 'bold',
+  },
 });
 
 const mapStateToProps = (state) => ({
-    shop: state.shop,
+  shop: state.shop,
+});
+
+Location.propTypes = PropTypes({
+  shop: PropTypes.object.isRequired,
 });
 
 export default connect(mapStateToProps, null)(Location);
